@@ -40,20 +40,20 @@ def external_penalties():
     p = 2
 
     k = 1 # номер итерации
-    eps = 0.001
+    eps = 0.0000001
 
     while True:
         K = k
 
         expr = sym.lambdify([(x_1, x_2)], F(r_k), "scipy")
-        x_min = minimize(expr, x_k).x
+        x_min = minimize(expr, x_k, tol=eps).x
 
         if P(r_k).subs([(x_1, x_min[0]), (x_2, x_min[1])]) < eps:
+            print("k = ", k)
             return (x_min, f(x_min))
         else:
             r_k = K * r_k
             x_k = x_min
             k = k + 1
-
 
 print(external_penalties())

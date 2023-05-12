@@ -65,7 +65,7 @@ def fastest_grad_descend(F_r_k: sym.core.add.Add, x_0: np.ndarray, eps: np.doubl
         print("f_next = ", f_next)
         f_k = F_r_k.subs([(x1, x_k[0]), (x2, x_k[1])])
         print("f_k = ", f_k)
-        if LA.norm(x_next - x_k) < eps and np.fabs(f_next - f_k) < eps:
+        if LA.norm(x_next - x_k) < eps and np.fabs(float(f_next) - float(f_k)) < eps:
             return (x_next)
         else:
             x_k = x_next
@@ -78,7 +78,7 @@ def external_penalties():
     p = 2
 
     k = 1 # номер итерации
-    eps = 0.0000001
+    eps = 0.001
 
     while True:
         K = k
