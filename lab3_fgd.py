@@ -47,7 +47,7 @@ def fastest_grad_descend(F_r_k: sym.core.add.Add, x_0: np.ndarray, eps: np.doubl
     k = 0 #номер итерации
     x_k = x_0
     x_next = x_k
-    print("F = ", F_r_k)
+    # print("F = ", F_r_k)
 
     while 1:
         grad = grad_f(F_r_k, x_k)
@@ -60,11 +60,11 @@ def fastest_grad_descend(F_r_k: sym.core.add.Add, x_0: np.ndarray, eps: np.doubl
         t_k = minimize_scalar(lambd, bracket=[-10, 10], method="golden").x
         x_next = x_k - t_k * grad
         f_next = F_r_k.subs([(x1, x_next[0]), (x2, x_next[1])])
-        print("x_next = ", x_next)
-        print("x_k = ", x_k)
-        print("f_next = ", f_next)
+        # print("x_next = ", x_next)
+        # print("x_k = ", x_k)
+        # print("f_next = ", f_next)
         f_k = F_r_k.subs([(x1, x_k[0]), (x2, x_k[1])])
-        print("f_k = ", f_k)
+        # print("f_k = ", f_k)
         if LA.norm(x_next - x_k) < eps and np.fabs(float(f_next) - float(f_k)) < eps:
             return (x_next)
         else:
@@ -78,7 +78,7 @@ def external_penalties():
     p = 2
 
     k = 1 # номер итерации
-    eps = 0.001
+    eps = 0.0000001
 
     while True:
         K = k
@@ -87,9 +87,9 @@ def external_penalties():
         # x_min =  minimize(expr, x_k).x
         x_min = fastest_grad_descend(F(r_k), x_k, eps)
 
-        print("x_min = ",x_min)
-
-        print(P(r_k).subs([(x_1, x_min[0]), (x_2, x_min[1])]))
+        # print("x_min = ",x_min)
+        print("k = ", k)
+        print("P(r_k) = ",  P(r_k).subs([(x_1, x_min[0]), (x_2, x_min[1])]))
         if P(r_k).subs([(x_1, x_min[0]), (x_2, x_min[1])]) < eps:
             return (x_min, f(x_min))
         else:
